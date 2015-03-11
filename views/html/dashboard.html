@@ -1,0 +1,99 @@
+<template name="dashboard">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <h4>Servers</h4>
+      <ul class="nav nav-sidebar">
+        <li class="active"><a href="#">Dashboard <span class="sr-only">(current)</span></a></li>
+        <li><a href="">Analytics</a></li>
+        <li><a href="">List</a></li>
+      </ul>
+      <h4>Settings</h4>
+      <ul class="nav nav-sidebar">
+        <li><a href="">Placeholder</a></li>
+      </ul>
+      <small>
+      <p><i class="fa fa-steam"></i> rtSrcds Version 0.1</p>
+      <p>The Steam logo is a registered trademark of Valve Corporation.</p>
+      </small>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <h1 class="page-header">THE BLACK BOX <small>192.99.247.174:27015</small></h1>
+      <small>
+          <pre>
+hostname: THE BLACK BOX
+version : 2544808/24 2544808 secure
+udp/ip  : 192.99.247.174:27015  (public ip: 192.99.247.174)
+steamid : [A:1:2229518339:4966] (90093323584520195)
+account : logged in
+map     : ctf_2fort at: 0 x, 0 y, 0 z
+players : 0 humans, 0 bots (24 max)
+</pre>
+      </small>
+      {{> playersOnline}}
+      {{> chat}}
+      {{> eventlog}}
+    </div>
+  </div>
+</div>
+</template>
+<template name="playersOnline">
+<h2 class="sub-header"><i class="fa fa-users"></i> Last Players Online</h2>
+<div class="row placeholders">
+  {{#each player}}
+  <div class="col-xs-6 col-sm-3 placeholder">
+    <a href="{{profileurl}}" target="_BLANK">
+      <img src="{{avatarmedium}}" class="img-responsive" title="{{personaname}}">
+      <h4>{{personaname}}</h4>
+      {{#if realname}}{{realname}}{{/if}}
+    </a>
+    {{#if loccountrycode}}
+    <br />
+    <span class="text-muted"><i class="fa fa-map-marker"></i> {{#if loccountrycode}}{{loccountrycode}}{{/if}}{{#if locstatecode}}, {{locstatecode}}{{/if}}
+    </span>
+    {{/if}}
+  </div>
+  {{/each}}
+</div>
+</template>
+<template name="eventlog">
+<h2 class="sub-header">Last 15 Events (need mapped)</h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Event</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each logevent}}
+      <tr>
+        <td>{{event}}</td>
+        <td>{{reactiveTime createdAt}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+</template>
+<template name="chat">
+<h2 class="sub-header"><i class="fa fa-weixin"></i> In Game Chat</h2>
+<div class="list-group">
+  {{#each message}}
+  <a href="#" target="_BLANK" class="list-group-item">
+    <h4 class="list-group-item-heading">
+    <span class="label label-{{teamColor}}">
+    <img src="{{userInfo.avatar}}" height="15" title="{{userInfo.personaname}}"> {{userInfo.personaname}}</span>
+    <span class="label label-{{teamColor}}">{{showTeam}}</span>
+    {{#if dead}}
+    <span class="label label-danger">DEAD</span>
+    {{/if}}
+    <small class="pull-right">{{reactiveTime}} <i class="fa fa-clock-o"></i></small>
+    </h4>
+    <small>{{content.message}}</small>
+    
+  </a>
+  {{/each}}
+</div>
+</template>

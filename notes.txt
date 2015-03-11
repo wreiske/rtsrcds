@@ -1,0 +1,33 @@
+Notes:
+
+Instead of looking up the clients steamid and community id each time, maybe it would be better to store it in a global client array?
+Need to create a basic function to call for events not yet implimented.
+
+Would it be possible to create a magic function that grabs all of the available events from (gameevents.res, serverevents.res, modevents.res) and then generate hooks for all and output all of the available data to a JSON object?
+
+For example: 
+
+https://wiki.alliedmods.net/Generic_Source_Server_Events#server_spawn
+
+server_spawn
+Structure:	
+string	hostname	public host name
+string	address	hostame, IP or DNS name
+string	ip	
+string	port	server port
+string	game	game dir
+string	mapname	map name
+long	maxplayers	max players
+string	os	WIN32, LINUX
+bool	dedicated	true if dedicated server
+bool	password	true if password protected
+
+The "magic" function would listen for all events, once the event server_spawn happens it would automatically add each property to a json object based on the type (string, integer, boolean, etc).
+
+-----
+Only register events from registered servers:
+	Api key
+
+
+	Required: 
+	Morecolors.inc https://forums.alliedmods.net/showthread.php?t=185016?t=185016
